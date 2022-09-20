@@ -2,8 +2,10 @@ import { createRouter, createWebHashHistory } from 'vue-router';
 
 // Define routes
 const routes = [
+  { path: '/', reidrect: '/home' },
   {
-    path: '/',
+    path: '/home',
+    name: 'home',
     component: () =>
       import(
         /* webpackChunkName: "ListPage" */ '@/modules/pokemon/pages/ListPage'
@@ -11,13 +13,15 @@ const routes = [
   },
   {
     path: '/about',
+    name: 'about',
     component: () =>
       import(
         /* webpackChunkName: "AboutPage" */ '@/modules/pokemon/pages/AboutPage'
       ),
   },
   {
-    path: '/:pokemonId',
+    path: '/pokemon/:pokemonId',
+    name: 'pokemon',
     component: () =>
       import(
         /* webpackChunkName: "PokemonPage" */ '@/modules/pokemon/pages/PokemonPage'
