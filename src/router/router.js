@@ -2,7 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router';
 
 // Define routes
 const routes = [
-  { path: '/', redirect: '/pokemon' },
+  { path: '/', redirect: { name: 'pokemon' } },
   {
     path: '/pokemon',
     name: 'pokemon',
