@@ -86,4 +86,16 @@ const router = createRouter({
   routes,
 });
 
+// Global Synchronous Guard
+router.beforeEach((to, from, next) => {
+  const random = Math.random() * 100;
+  if (random > 50) {
+    console.log('Authenticated');
+    next();
+  } else {
+    console.log('Blocked:', random);
+    next({ name: 'pokemon-home' });
+  }
+});
+
 export default router;
