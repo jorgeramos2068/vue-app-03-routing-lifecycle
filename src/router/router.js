@@ -2,38 +2,50 @@ import { createRouter, createWebHashHistory } from 'vue-router';
 
 // Define routes
 const routes = [
-  { path: '/', reidrect: '/home' },
+  { path: '/', redirect: '/pokemon' },
   {
-    path: '/home',
-    name: 'home',
-    component: () =>
-      import(
-        /* webpackChunkName: "ListPage" */ '@/modules/pokemon/pages/ListPage'
-      ),
-  },
-  {
-    path: '/about',
-    name: 'about',
-    component: () =>
-      import(
-        /* webpackChunkName: "AboutPage" */ '@/modules/pokemon/pages/AboutPage'
-      ),
-  },
-  {
-    path: '/pokemon/:pokemonId',
+    path: '/pokemon',
     name: 'pokemon',
     component: () =>
       import(
-        /* webpackChunkName: "PokemonPage" */ '@/modules/pokemon/pages/PokemonPage'
+        /* webpackChunkName: "PokemonLayout" */ '@/modules/pokemon/layouts/PokemonLayout'
       ),
-    props: route => {
-      const { pokemonId } = route.params;
-      const pokemonIdNumber = Number(pokemonId);
-      return {
-        pokemonId: !isNaN(pokemonIdNumber) ? pokemonIdNumber : 1,
-      };
-    },
+    children: [
+      {
+        path: 'home',
+        name: 'pokemon-home',
+        component: () =>
+          import(
+            /* webpackChunkName: "ListPage" */ '@/modules/pokemon/pages/ListPage'
+          ),
+      },
+      {
+        path: 'about',
+        name: 'pokemon-about',
+        component: () =>
+          import(
+            /* webpackChunkName: "AboutPage" */ '@/modules/pokemon/pages/AboutPage'
+          ),
+      },
+      {
+        path: 'pokemon/:pokemonId',
+        name: 'pokemon-id',
+        component: () =>
+          import(
+            /* webpackChunkName: "PokemonPage" */ '@/modules/pokemon/pages/PokemonPage'
+          ),
+        props: route => {
+          const { pokemonId } = route.params;
+          const pokemonIdNumber = Number(pokemonId);
+          return {
+            pokemonId: !isNaN(pokemonIdNumber) ? pokemonIdNumber : 1,
+          };
+        },
+      },
+      { path: '', redirect: { name: 'pokemon-home' } },
+    ],
   },
+
   {
     path: '/:pathMatch(.*)*',
     component: () =>
